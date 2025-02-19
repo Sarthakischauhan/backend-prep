@@ -24,4 +24,6 @@ def table_exists(table_name:str):
 
 @app.get("/get-orders/{order_id}")
 def get_orders(order_id:int):
-    return {"order_id":order_id}
+    orders = db.get_order(order_id=order_id) 
+    details = db.get_user_vehicle(*orders)
+    return details

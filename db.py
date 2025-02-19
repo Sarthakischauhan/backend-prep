@@ -96,3 +96,13 @@ class DB():
             self.cursor.execute(insert_query, values)  
         except sqlite3.Error as e:
             print(f"SQLite error: {e}")
+
+    def get_user_vehicle(self, order_id, user_id, vehicle_id):
+        query = f"select v.model_name,v.vin, u.email, u.name from vehicles v inner join orders o on v.id = {vehicle_id} inner join users u on u.id = {user_id} where o.id = {order_id}"
+        result = self.cursor.execute(query).fetchall()
+        return result
+
+    def get_order(self, order_id):
+        order_query = f"select * from orders where id = {order_id}"
+        result = self.cursor.execute(order_query).fetchone()
+        return result
